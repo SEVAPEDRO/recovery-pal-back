@@ -99,7 +99,7 @@ exports.postExercise = async function (req, res, next) {
     doctor: mongoose.Types.ObjectId(req.body.doctor),
     instructions: req.body.instructions,
     videoTitle: req.body.videoTitle,
-    videoURL: "./videos/" + req.body.videoURL,
+    videoURL: "http://127.0.0.1:8080/videos/" + req.body.videoURL,
   };
   try {
     //Necesito haber hecho el get antes de hacer el PUT?
