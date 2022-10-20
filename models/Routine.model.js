@@ -6,12 +6,16 @@ var RoutineSchema = new mongoose.Schema({
     patient: { type: mongoose.Types.ObjectId, ref: 'patient' },
     doctor: { type: mongoose.Types.ObjectId, ref: 'doctor' },
     name: String,
-    exercises: [{ type: mongoose.Types.ObjectId, ref: 'exercise' }],
     feedbacks: [{ type: mongoose.Types.ObjectId, ref: 'feedback' }],
     schedule:{
         weeks: Number,
         times: Number
-    }
+    },
+    exercises: [{
+        sets: Number,
+        weight: String,
+        exercise: {type: mongoose.Types.ObjectId, ref: 'exercise' }
+    }],
 })
 
 RoutineSchema.plugin(mongoosePaginate)
