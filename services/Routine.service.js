@@ -16,11 +16,11 @@ exports.createRoutine = async function (routine) {
         patient: routine.patient,
         doctor: routine.doctor,
         name: routine.name,
-        exercises: routine.exercises,
         schedule:{
             weeks: routine.weeks,
             times: routine.times
-        }
+        },
+        exercises: routine.exercises
     })
     try {
         // Saving the User 

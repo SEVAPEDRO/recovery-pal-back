@@ -9,7 +9,11 @@ _this = this;
 exports.createRoutine = async function (req, res, next) {
     // Req.Body contains the form submit values.
     console.log("llegue al controller",req.body)
-    var exercises = req.body.exercises.map(x => mongoose.Types.ObjectId(x))
+    var exercises = req.body.exercises
+    var exercisesID = req.body.exercises.map(x => mongoose.Types.ObjectId(x.exercise))
+    for(let i = 0; i < exercisesID.length; i++){
+        exercises[i].exercise = exercisesID[i]
+    }
     var Routine = {
         patient: mongoose.Types.ObjectId(req.body.patient),
         doctor: mongoose.Types.ObjectId(req.body.doctor),
