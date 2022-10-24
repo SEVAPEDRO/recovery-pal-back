@@ -14,19 +14,23 @@ exports.createRoutine = async function (req, res, next) {
     for(let i = 0; i < exercisesID.length; i++){
         exercises[i].exercise = exercisesID[i]
     }
+
+    var days = req.body.days.map(x => parseInt(x))
     var Routine = {
         patient: mongoose.Types.ObjectId(req.body.patient),
         doctor: mongoose.Types.ObjectId(req.body.doctor),
         name: req.body.name,
         exercises: exercises,
         weeks: parseInt(req.body.weeks),
-        times: parseInt(req.body.times)
+        days: days
     }
     try {
         // Calling the Service function with the new object from the Request Body
         var createdRoutine = await RoutineService.createRoutine(Routine)
         var doctor = await RoutineService.addRoutineInDoctor(createdRoutine)
         var patient = await RoutineService.addRoutineInPatient(createdRoutine)
+
+        var feedBacks = await RoutineService.createFeedbacks(createdRoutine)
         return res.status(201).json({createdRoutine, message: "Succesfully Created Routine"})
     } catch (e) {
         //Return an Error Response Message with Code and the Error Message.

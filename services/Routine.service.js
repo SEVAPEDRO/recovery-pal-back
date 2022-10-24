@@ -4,6 +4,8 @@ var Doctor = require('../models/Doctor.model');
 var Patient = require('../models/Patient.model');
 
 var mongoose = require('mongoose')
+var moment = require('moment'); // require
+const Feedback = require('../models/Feedback.model');
 
 // Saving the context of this module inside the _the variable
 _this = this
@@ -18,9 +20,10 @@ exports.createRoutine = async function (routine) {
         name: routine.name,
         schedule:{
             weeks: routine.weeks,
-            times: routine.times
+            days: routine.days
         },
-        exercises: routine.exercises
+        exercises: routine.exercises,
+        feedbacksDone: 0
     })
     try {
         // Saving the User 
@@ -82,5 +85,79 @@ exports.addRoutineInPatient = async function (routine){
         // return a Error message describing the reason 
         console.log("error services",e)
         throw Error('Error while adding Routine in Patient');
+    }
+}
+
+function safeMath(today, laterDay) {
+    today += 1
+    laterDay += 1
+    var sum = laterDay - today
+    if(sum<0){
+        sum += 7
+    }
+    return sum;
+}
+
+exports.createFeedbacks = async function (routine){
+    try {
+        var days = routine.schedule.days
+        var weeks = routine.schedule.weeks
+
+        var today = new Date()
+        today.setHours(today.getHours() - 3);
+
+        var i = 0
+        while(i < days.length){
+            if(today.getDay() === days[i]){
+                break
+            }else if(today.getDay() < days[i] ){
+                break
+            }else if(today.getDay() > days[i] && i === days.length-1){
+                i = 0
+                break
+            }
+            i++
+        }
+
+        let cont =days.length * weeks
+        while(cont > 0){
+            for(let j = i; j < days.length; j++){
+                var sum = safeMath(today.getDay(), days[j])
+                today.setDate(today.getDate() + sum);
+                await this.creaFeedback(routine,today)
+                cont -= 1
+                if(cont<=0){
+                    break
+                }
+            }
+            i=0
+        }
+        
+    } catch (e) {
+        // return a Error message describing the reason 
+        console.log("error services",e)
+        throw Error('Error while creating feedbacks');
+    }
+}
+
+exports.creaFeedback = async function (routine,date){
+    try {
+        //Creo Feedback
+        var feedback = new Feedback({
+            routine: routine._id,
+            patient: routine.patient,
+            date: date
+        });
+        var newFeedback = await feedback.save();
+
+        //Adiciono Feedback en rutina
+        var oldroutine = await Routine.findOne(routine._id)
+        oldroutine.feedbacks.push(newFeedback._id)
+        var upRoutine = await oldroutine.save();
+        
+    } catch (e) {
+        // return a Error message describing the reason 
+        console.log("error services",e)
+        throw Error('Error while creating feedbacks');
     }
 }

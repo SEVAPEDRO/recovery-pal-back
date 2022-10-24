@@ -8,9 +8,10 @@ var RoutineSchema = new mongoose.Schema({
     name: String,
     feedbacks: [{ type: mongoose.Types.ObjectId, ref: 'feedback' }],
     schedule:{
-        weeks: Number,
-        times: Number
+        days: [Number],
+        weeks: Number
     },
+    feedbacksDone: Number,
     exercises: [{
         sets: Number,
         weight: String,
