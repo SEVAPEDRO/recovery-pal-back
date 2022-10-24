@@ -8,8 +8,9 @@ var FeedbackSchema = new mongoose.Schema({
     complete: Boolean,
     pain: Boolean,
     improve: Boolean,
-    exercisesDone: [mongoose.Types.ObjectId]
-}, { timestamps: true }
+    exercisesDone: [mongoose.Types.ObjectId],
+    date: Date,
+}
 )
 
 FeedbackSchema.plugin(mongoosePaginate)
