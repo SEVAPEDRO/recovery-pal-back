@@ -29,11 +29,19 @@ exports.getLastFeedbackByRoutine = async function (routineId) {
     var fechaHoy = new Date();
     var fechaAyer = new Date();
     fechaAyer.setDate(fechaAyer.getDate() - 1);
-    var feedback = await Feedback.findOne({
-      routine: routineId,
+    for (let days = 0; days<6; days++) {
+      var feedback = await Feedback.findOne({
+        routine: routineId,
+        date: { $gte: fechaAyer, $lt: fechaHoy },
+      });  
+      if (feedback != undefined)
+        break
+    }
+    if (feedback === undefined)
+      throw Error("There is not feedbacks for this period");
 
-      createdAt: { $gte: fechaAyer, $lt: fechaHoy },
-    });
+
+    /*
     if (!feedback) {
       var feedback = new Feedback({
         routine: routineId,
@@ -41,6 +49,7 @@ exports.getLastFeedbackByRoutine = async function (routineId) {
       });
       feedback.save();
     }
+    */
     return feedback;
   } catch (e) {
     if (e.name === "CastError") {
