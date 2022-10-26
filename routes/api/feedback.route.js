@@ -9,6 +9,7 @@ var Authorization = require('../../auth/authorization');
 router.get('/:_id', FeedbackController.getFeedback);
 router.get('/getLastFeedbackByRoutine/:_id', FeedbackController.getLastFeedbackByRoutine);
 router.put('/:_id', FeedbackController.putFeedbackById);
+router.post('/completeExerciseInFeedback', FeedbackController.completeExerciseInFeedback);
 
 
 // Export the Router
