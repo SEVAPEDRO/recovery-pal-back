@@ -142,11 +142,17 @@ exports.createFeedbacks = async function (routine){
 
 exports.creaFeedback = async function (routine,date){
     try {
+       
         //Creo Feedback
         var feedback = new Feedback({
             routine: routine._id,
             patient: routine.patient,
-            date: date
+            date: date,
+            complete: false,
+            pain: false,
+            improve: false,
+            exercisesDone : []
+
         });
         var newFeedback = await feedback.save();
 
