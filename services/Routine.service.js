@@ -48,7 +48,7 @@ exports.getRoutine = async function (query){
             path: 'patient',
             model: 'Patient'
         }, {
-            path: 'exercises',
+            path: 'exercises.exercise',
             model: 'Exercise'
         }, {
             path: 'feedbacks',
