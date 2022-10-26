@@ -1,32 +1,15 @@
-const cloudinary = require("../utils/cloudinary");
-const Video = require ("../models/Video.model");
+const cloudinary = require('../utils/cloudinary');
+const Video = require('../models/Video.model');
 
-exports.uploadVideo = (req, res) => {
-    cloudinary.uploader.upload(req.file.path,
-        {
-            resource_type: "video",
-            folder: "video",
-          },
-        
-        (err, result) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).send(err);
-        }
-        var upload = new Video({
-            name: req.file.originalname,
-            url: result.url,
-            cloudinary_id: result.public_id,
-            description: req.body.description,
-        });
-        upload.save((err, result) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).send(err);
-            }
-            return res.status(200).send(result);
-        }
-        );
-    }
-    );
-} 
+exports.uploadVideo = async (req, res) => {
+  try {
+    const file = req.body.file;
+    console.log(file);
+    const uploadResponse = await cloudinary.uploader.upload(file);
+    console.log(uploadResponse);
+    res.status(200).json({ message: 'Se subio' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ err: 'Something went wrong' });
+  }
+};
