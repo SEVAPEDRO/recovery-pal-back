@@ -14,10 +14,10 @@ exports.uploadVideo = (req, res) => {
             return res.status(500).send(err);
         }
         var upload = new Video({
-            name: req.file.originalname,
-            url: result.url,
-            cloudinary_id: result.public_id,
+            name: req.body.name,
             description: req.body.description,
+            url: result.url,
+            
         });
         upload.save((err, result) => {
             if (err) {

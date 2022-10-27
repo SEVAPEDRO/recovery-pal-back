@@ -7,3 +7,5 @@ cloudinary.config({
 });
 
 module.exports = cloudinary; 
+
+//cloudinary account --> user: mercrodriguez@uade.edu.ar / pass: Uade123!
