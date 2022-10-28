@@ -15,6 +15,7 @@ var RoutineSchema = new mongoose.Schema({
     exercises: [{
         sets: Number,
         weight: String,
+        repetitions: Number,
         exercise: {type: mongoose.Types.ObjectId, ref: 'exercise' }
     }],
 })

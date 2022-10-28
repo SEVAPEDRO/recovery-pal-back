@@ -140,7 +140,6 @@ exports.completeExerciseInFeedback = async function (idFeedback, idExercise) {
     if (feedback.exercisesDone.includes(idExercise))
       throw Error("Exercise is already done")
     feedback.exercisesDone.push(idExercise)
-    var routine = await Routine.findOne( {_id : feedback.routine})
     if (feedback.exercisesDone.length === routine.exercises.length)
     // Se completo el feedback con todos los ejercicios
     // Lo agrego a la feedbacksDone de la rutina
