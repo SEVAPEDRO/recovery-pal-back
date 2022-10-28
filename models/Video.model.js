@@ -4,9 +4,8 @@ const schema = mongoose.Schema;
 
 var videoSchema = new schema({
     name: String,
-    url: String,
-    cloudinary_id: String,
     description: String,
+    url: String
 })
 
 const video = mongoose.model('upload', videoSchema);
