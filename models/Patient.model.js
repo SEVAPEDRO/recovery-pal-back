@@ -8,7 +8,8 @@ var PatientSchema = new mongoose.Schema({
     lastName: String,
     email: String,
     password: String,
-    routines: [{ type: mongoose.Types.ObjectId, ref: 'routine' }]
+    routines: [{ type: mongoose.Types.ObjectId, ref: 'routine' }],
+    suffering: String
 
 })
 

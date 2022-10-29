@@ -70,8 +70,9 @@ exports.getLastFeedbackByRoutine = async function (req, res, next) {
       complete: req.body.complete,
       pain: req.body.pain,
       improve : req.body.improve,
-      exerciseDone: req.body.exerciseDone
+      exercisesDone: req.body.exercisesDone
     };
+    console.log("changes: ", changes)
     try {
       var gotFeedback = await FeedbackService.getFeedback(filter);
       if (!gotFeedback) {
@@ -95,3 +96,35 @@ exports.getLastFeedbackByRoutine = async function (req, res, next) {
       return res.status(400).json({ status: 400, message: e.message });
     }
   };
+
+exports.completeExerciseInFeedback = async function (req, res, next) {
+  console.log(req.body)
+  if (!req.body.idExercise) {
+    return res
+      .status(400)
+      .json({ status: 400, message: "Exercise ID be present" });
+  }
+  if (!req.body.idFeedback) {
+    return res
+      .status(400)
+      .json({ status: 400, message: "Feedback ID be present" });
+  }
+
+
+  try {
+    var gotFeedback = await FeedbackService.completeExerciseInFeedback(req.body.idFeedback, req.body.idExercise);
+    if (!gotFeedback) {
+      return res
+        .status(400)
+        .json({ status: 400, message: "Exercise or Feedback ID does not exist" });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: gotFeedback,
+        message: "Succesfully put Feedback",
+      });
+    }
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};

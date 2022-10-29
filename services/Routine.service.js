@@ -48,7 +48,7 @@ exports.getRoutine = async function (query){
             path: 'patient',
             model: 'Patient'
         }, {
-            path: 'exercises',
+            path: 'exercises.exercise',
             model: 'Exercise'
         }, {
             path: 'feedbacks',
@@ -64,7 +64,9 @@ exports.getRoutine = async function (query){
 
 exports.addRoutineInDoctor = async function (routine){
     try {
+        console.log("Soy routine",routine)
         var doctor = await Doctor.findOne(routine.doctor)
+        console.log("Soy routine",routine.doctor, doctor)
         doctor.routines.push(routine._id)
         var upDoc = await doctor.save();
         return upDoc
@@ -142,11 +144,17 @@ exports.createFeedbacks = async function (routine){
 
 exports.creaFeedback = async function (routine,date){
     try {
+       
         //Creo Feedback
         var feedback = new Feedback({
             routine: routine._id,
             patient: routine.patient,
-            date: date
+            date: date,
+            complete: false,
+            pain: false,
+            improve: false,
+            exercisesDone : []
+
         });
         var newFeedback = await feedback.save();
 
