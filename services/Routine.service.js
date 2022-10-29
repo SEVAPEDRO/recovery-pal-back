@@ -64,7 +64,9 @@ exports.getRoutine = async function (query){
 
 exports.addRoutineInDoctor = async function (routine){
     try {
+        console.log("Soy routine",routine)
         var doctor = await Doctor.findOne(routine.doctor)
+        console.log("Soy routine",routine.doctor, doctor)
         doctor.routines.push(routine._id)
         var upDoc = await doctor.save();
         return upDoc
