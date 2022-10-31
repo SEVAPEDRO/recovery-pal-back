@@ -9,7 +9,8 @@ router.get('/test', function(req, res, next) {
   });
 
 router.post('/', AchievementController.retrieveAchievements)
-
+router.post('/routine', AchievementController.retrieveAchievementsRoutine)
+router.post('/report', AchievementController.routineReport)
 
 // Export the Router
 module.exports = router;
