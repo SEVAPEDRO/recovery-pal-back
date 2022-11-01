@@ -7,9 +7,6 @@ var IdPresent = function (req, res, next) {
 var OnlyBodyPresent = function (req, res, next) {
     return res.status(400).json({status : 400, message: "Only body allowed"})
 }
-router.get('/test', function(req, res, next) {
-    res.send('Llegaste a la ruta de  api/Routine.routes');
-  });
 
 // Authorize each API with middleware and map to the Controller Functions
 /* GET users listing. */
@@ -21,8 +18,8 @@ router.post('/:_', OnlyBodyPresent)
 
 
 
-router.get('/:_id', ExerciseController.getExerciseById)
-//router.get('/allExcercises', ExerciseController.getAllExcercises)
+//router.get('/:_id', ExerciseController.getExerciseById)
+router.get('/allExcercises/', ExerciseController.getAllExcercises)
 router.put('/:_id', ExerciseController.putExerciseById)
 router.post('/', ExerciseController.postExercise)
 router.delete('/:_id', ExerciseController.deleteExerciseById)

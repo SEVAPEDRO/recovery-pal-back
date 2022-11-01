@@ -96,8 +96,8 @@ exports.getExercisesByVideoTitleMatch = async function (filtro) {
     try {
         //var exercise = await Exercise.findOne(filtro)
         var exercises = await Exercise.find(filtro)
-
         return exercises;
+        
     } catch (e) {
         if (e.name === "CastError") {
             throw Error("Incorrect ID")
