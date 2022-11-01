@@ -3,7 +3,8 @@ var Exercise = require('../models/Exercise.model');
 var jwt = require('jsonwebtoken');
 var Doctor = require('../models/Doctor.model');
 
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
+const { Collection } = require('mongoose');
 
 // Saving the context of this module inside the _the variable
 _this = this
@@ -130,4 +131,18 @@ exports.deleteExerciseInDoctor = async function (exercise){
         console.log("error services",e)
         throw Error('Error while deletting Exercise in Doctor');
     }
+}
+
+
+
+exports.getAllExcercises = async function (filtro){
+    try{
+        var exercises = await Exercise.find(filtro)
+        return exercises;
+    } catch(e){
+        console.log("error due to", e)
+        throw Error("And Error occured while getting all the Exercises");
+        
+    }
+    
 }

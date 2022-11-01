@@ -166,4 +166,6 @@ exports.creaFeedback = async function (routine,date){
         console.log("error services",e)
         throw Error('Error while creating feedbacks');
     }
+
+    
 }

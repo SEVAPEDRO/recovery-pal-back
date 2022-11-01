@@ -180,3 +180,27 @@ exports.getExercisesByVideoTitleMatch = async function (req, res, next) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+
+exports.getAllExcercises = async function (req, res, next) {
+  var filter = {};
+  try {
+    var all = await ExerciseService.getAllExcercises(
+      filter
+    );
+    if (!all) {
+      return res
+        .status(400)
+        .json({ status: 400, message: "no Excercises to show" });
+    } else {
+      return res
+        .status(200)
+        .json({
+          status: 200,
+          data: all,
+          message: "Succesfully getted all Exercises",
+        });
+    }
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};
