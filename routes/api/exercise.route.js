@@ -18,7 +18,7 @@ router.post('/:_', OnlyBodyPresent)
 
 
 
-//router.get('/:_id', ExerciseController.getExerciseById)
+router.get('/:_id', ExerciseController.getExerciseById)
 router.get('/allExcercises/', ExerciseController.getAllExcercises)
 router.put('/:_id', ExerciseController.putExerciseById)
 router.post('/', ExerciseController.postExercise)
