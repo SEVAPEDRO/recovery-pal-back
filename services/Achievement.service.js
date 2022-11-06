@@ -79,21 +79,72 @@ exports.routineReport = async function (query) {
             {path: "feedbacks", model: "Feedback"}
         )
         var report = {
-            timesComplete : 0,
-            timesPain: 0,
-            timesImprove: 0,
+            timesComplete_0 : 0,
+            timesPain_0: 0,
+            timesImprove_0: 0,
+            timesFeeling_0: 0,
+            timesComplete_1 : 0,
+            timesPain_1: 0,
+            timesImprove_1: 0,
+            timesFeeling_1 : 0,
+            timesComplete_2 : 0,
+            timesPain_2: 0,
+            timesImprove_2: 0,
+            timesFeeling_2 : 0,
+            timesPain_3: 0,
+            timesImprove_3: 0,
+            timesFeeling_3 : 0,
             totalFeedbacks: routine.feedbacks.length,
             feedbacksDone: routine.feedbacksDone
         }
         for(let j = 0; j < routine.feedbacks.length; j++){
-            if(routine.feedbacks[j].complete){
-                report.timesComplete++
+            if(routine.feedbacks[j].complete===0){
+                report.timesComplete_0++
             }
-            if(routine.feedbacks[j].pain){
-                report.timesPain++
+            else if(routine.feedbacks[j].complete===1){
+                report.timesComplete_1++
             }
-            if(routine.feedbacks[j].improve){
-                report.timesImprove++
+            else if(routine.feedbacks[j].complete===2){
+                report.timesComplete_2++
+            }
+
+            if(routine.feedbacks[j].pain===0){
+                report.timesPain_0++
+            }
+            else if(routine.feedbacks[j].pain===1){
+                report.timesPain_1++
+            }
+            else if(routine.feedbacks[j].pain===2){
+                report.timesPain_2++
+            }
+            else if(routine.feedbacks[j].pain===3){
+                report.timesPain_3++
+            }
+
+            if(routine.feedbacks[j].improve===0){
+                report.timesImprove_0++
+            }
+            else if(routine.feedbacks[j].improve===1){
+                report.timesImprove_1++
+            }
+            else if(routine.feedbacks[j].improve===2){
+                report.timesImprove_2++
+            }
+            else if(routine.feedbacks[j].improve===3){
+                report.timesImprove_3++
+            }
+
+            if(routine.feedbacks[j].feeling===0){
+                report.timesFeeling_0++
+            }
+            else if(routine.feedbacks[j].feeling===1){
+                report.timesFeeling_1++
+            }
+            else if(routine.feedbacks[j].feeling===2){
+                report.timesFeeling_2++
+            }
+            else if(routine.feedbacks[j].feeling===3){
+                report.timesFeeling_3++
             }
         }
         return report
