@@ -19,6 +19,7 @@ exports.createRoutine = async function (req, res, next) {
     var Routine = {
         patient: mongoose.Types.ObjectId(req.body.patient),
         doctor: mongoose.Types.ObjectId(req.body.doctor),
+        comment: req.body.comment,
         name: req.body.name,
         exercises: exercises,
         weeks: parseInt(req.body.weeks),
