@@ -47,6 +47,7 @@ exports.putExerciseById = async function (req, res, next) {
     instructions: req.body.instructions,
     videoTitle: req.body.videoTitle,
     videoURL: req.body.videoURL,
+    description: req.body.description
   };
   try {
     var gotExercise = await ExerciseService.getExercise(filter);
@@ -95,11 +96,19 @@ exports.postExercise = async function (req, res, next) {
       .json({ status: 400, message: "Video URL be presente" });
   }
 
+  if (!req.body.description) {
+    return res
+      .status(400)
+      .json({ status: 400, message: "Description be presente" });
+  }
+
   var inserted = {
     doctor: mongoose.Types.ObjectId(req.body.doctor),
     instructions: req.body.instructions,
     videoTitle: req.body.videoTitle,
     videoURL: req.body.videoURL,
+    description: req.body.description
+    
   };
   try {
     //Necesito haber hecho el get antes de hacer el PUT?

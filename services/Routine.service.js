@@ -18,6 +18,7 @@ exports.createRoutine = async function (routine) {
         patient: routine.patient,
         doctor: routine.doctor,
         name: routine.name,
+        comment: routine.comment,
         schedule:{
             weeks: routine.weeks,
             days: routine.days
