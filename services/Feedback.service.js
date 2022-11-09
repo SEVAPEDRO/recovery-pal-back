@@ -152,3 +152,22 @@ exports.completeExerciseInFeedback = async function (idFeedback, idExercise) {
   }  
 
 }
+
+exports.addUserFeedback = async function (idFeedback,userInfo) {
+  try {
+    var feedback = await Feedback.findOne({_id : idFeedback});
+    feedback.pain = userInfo.pain
+    feedback.improve = userInfo.improve
+    feedback.comment = userInfo.comment
+    feedback.feeling = userInfo.feeling
+    changedFeedback = await feedback.save();
+    return changedFeedback;
+  } catch (e) {
+    if (e.name === "CastError") {
+      throw Error("Incorrect ID");
+    }
+    console.log(e);
+    throw Error("And Error occured while putting the Feedback");
+  }  
+
+}
