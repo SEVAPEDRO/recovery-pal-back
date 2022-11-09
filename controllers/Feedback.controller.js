@@ -107,3 +107,34 @@ exports.completeExerciseInFeedback = async function (req, res, next) {
     return res.status(400).json({ status: 400, message: e.message });
   }
 };
+
+exports.addUserFeedback = async function (req, res, next) {
+  console.log(req.body)
+  if (!req.body.idFeedback) {
+    return res
+      .status(400)
+      .json({ status: 400, message: "Feedback ID be present" });
+  }
+  var userInfo = {
+    pain : req.body.pain ? parseInt(req.body.pain) : 0,
+    comment : req.body.comment ? req.body.comment : 0,
+    improve : req.body.improve ? parseInt(req.body.improve) : 0,
+    feeling : req.body.feeling ? parseInt(req.body.feeling) : 0,
+  }
+  try {
+    var gotFeedback = await FeedbackService.addUserFeedback(req.body.idFeedback, userInfo);
+    if (!gotFeedback) {
+      return res
+        .status(400)
+        .json({ status: 400, message: "Exercise or Feedback ID does not exist" });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: gotFeedback,
+        message: "Succesfully put Feedback",
+      });
+    }
+  } catch (e) {
+    return res.status(400).json({ status: 400, message: e.message });
+  }
+};

@@ -10,7 +10,7 @@ router.get('/:_id', FeedbackController.getFeedback);
 router.get('/getLastFeedbackByRoutine/:_id', FeedbackController.getLastFeedbackByRoutine);
 router.put('/:_id', FeedbackController.putFeedbackById);
 router.post('/completeExerciseInFeedback', FeedbackController.completeExerciseInFeedback);
-
+router.put('/addUserFeedback', FeedbackController.addUserFeedback);
 
 // Export the Router
 module.exports = router;
