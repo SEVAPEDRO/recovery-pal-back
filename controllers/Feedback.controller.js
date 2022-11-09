@@ -109,7 +109,7 @@ exports.completeExerciseInFeedback = async function (req, res, next) {
 };
 
 exports.addUserFeedback = async function (req, res, next) {
-  console.log(req.body)
+  console.log("Hola",req.body)
   if (!req.body.idFeedback) {
     return res
       .status(400)
@@ -121,8 +121,9 @@ exports.addUserFeedback = async function (req, res, next) {
     improve : req.body.improve ? parseInt(req.body.improve) : 0,
     feeling : req.body.feeling ? parseInt(req.body.feeling) : 0,
   }
+  
   try {
-    var gotFeedback = await FeedbackService.addUserFeedback(req.body.idFeedback, userInfo);
+    var gotFeedback = await FeedbackService.addUserFeedback(mongoose.Types.ObjectId(req.body.idFeedback), userInfo);
     if (!gotFeedback) {
       return res
         .status(400)
