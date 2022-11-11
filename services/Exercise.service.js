@@ -42,6 +42,9 @@ exports.putExercise = async function (filter, changes) {
         if (changes.doctor)  {
             exercise.doctor = changes.doctor
         }
+        if (changes.description)  {
+            exercise.description= changes.description
+        }
         /*
         var exercise = await Exercise.findOneAndUpdate(filter, changes, {
             new: true

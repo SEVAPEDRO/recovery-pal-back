@@ -6,6 +6,7 @@ var ObjectId = mongoose.Schema.ObjectId;
 var ExerciseSchema = new mongoose.Schema({
     doctor: mongoose.Types.ObjectId,
     instructions: String,
+    description: String,
     videoTitle: String,
     videoURL: String
 })

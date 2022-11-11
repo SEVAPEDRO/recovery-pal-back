@@ -66,30 +66,19 @@ exports.getLastFeedbackByRoutine = async function (routineId) {
 exports.putFeedback = async function (filter, changes) {
   try {
     var feedback = await Feedback.findOne(filter);
-    await exports.deleteFeedbackInRoutine(feedback);
-
-    if (changes.patient) {
-      feedback.patient = changes.patient;
-    }
-    if (changes.routine) {
-      feedback.routine = changes.routine;
-    }
-    if (changes.complete) {
-      feedback.complete = changes.complete;
-    }
     if (changes.pain) {
       feedback.pain = changes.pain;
     }
     if (changes.improve) {
       feedback.improve = changes.improve;
     }
-    if (changes.exercisesDone) {
-      feedback.exercisesDone = changes.exercisesDone;
+    if (changes.feeling) {
+      feedback.feeling = changes.feeling;
     }
-
+    if (changes.comment) {
+      feedback.comment = changes.comment;
+    }
     changedFeedback = await feedback.save();
-    await exports.addFeedbackInRoutine(changedFeedback);
-
     return changedFeedback;
   } catch (e) {
     if (e.name === "CastError") {
@@ -148,8 +137,29 @@ exports.completeExerciseInFeedback = async function (idFeedback, idExercise) {
       fechaActual = moment().format('D/MM/YYYY')
       if (fechaActual === moment(feedback.date).format('D/MM/YYYY')){
         //Agrego que se completo en el mismo dia
-        feedback.complete = true
+        feedback.complete = 1
+      }else{
+        feedback.complete = 2
       }
+    changedFeedback = await feedback.save();
+    return changedFeedback;
+  } catch (e) {
+    if (e.name === "CastError") {
+      throw Error("Incorrect ID");
+    }
+    console.log(e);
+    throw Error("And Error occured while putting the Feedback");
+  }  
+
+}
+
+exports.addUserFeedback = async function (idFeedback,userInfo) {
+  try {
+    var feedback = await Feedback.findOne({_id : idFeedback});
+    feedback.pain = userInfo.pain
+    feedback.improve = userInfo.improve
+    feedback.comment = userInfo.comment
+    feedback.feeling = userInfo.feeling
     changedFeedback = await feedback.save();
     return changedFeedback;
   } catch (e) {

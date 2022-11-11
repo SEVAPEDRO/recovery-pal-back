@@ -18,6 +18,7 @@ exports.createRoutine = async function (routine) {
         patient: routine.patient,
         doctor: routine.doctor,
         name: routine.name,
+        comment: routine.comment,
         schedule:{
             weeks: routine.weeks,
             days: routine.days
@@ -150,9 +151,11 @@ exports.creaFeedback = async function (routine,date){
             routine: routine._id,
             patient: routine.patient,
             date: date,
-            complete: false,
-            pain: false,
-            improve: false,
+            complete: 0,
+            pain: 0,
+            improve: 0,
+            feeling: 0,
+            comment: "",
             exercisesDone : []
 
         });

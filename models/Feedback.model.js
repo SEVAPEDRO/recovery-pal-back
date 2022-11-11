@@ -5,9 +5,11 @@ var ObjectId = mongoose.Schema.ObjectId;
 var FeedbackSchema = new mongoose.Schema({
     patient: mongoose.Types.ObjectId,
     routine:  mongoose.Types.ObjectId,
-    complete: Boolean,
-    pain: Boolean,
-    improve: Boolean,
+    complete: Number,
+    pain: Number,
+    improve: Number,
+    feeling: Number,
+    comment: String,
     exercisesDone: [mongoose.Types.ObjectId],
     date: Date,
 }

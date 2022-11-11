@@ -5,6 +5,7 @@ var ObjectId = mongoose.Schema.ObjectId;
 var RoutineSchema = new mongoose.Schema({
     patient: { type: mongoose.Types.ObjectId, ref: 'patient' },
     doctor: { type: mongoose.Types.ObjectId, ref: 'doctor' },
+    comment: String,
     name: String,
     feedbacks: [{ type: mongoose.Types.ObjectId, ref: 'feedback' }],
     schedule:{
