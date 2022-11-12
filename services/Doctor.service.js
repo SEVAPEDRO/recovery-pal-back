@@ -1,9 +1,12 @@
 // Gettign the Newly created Mongoose Model we just created 
 var Doctor = require('../models/Doctor.model');
+var Patient = require('../models/Patient.model');
+var Routine = require('../models/Routine.model');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
 var mongoose = require('mongoose')
+var moment = require("moment");
 
 // Saving the context of this module inside the _the variable
 _this = this
@@ -74,6 +77,41 @@ exports.getDoctor = async function (query){
             model: 'Patient'
         }])
         return doctor
+    } catch (e) {
+        // return a Error message describing the reason 
+        console.log("error services",e)
+        throw Error('Error while finding doctor');
+    }
+}
+
+exports.getAllCommentsByDoctor = async function (doctor){
+    try {
+        var comments = []
+        var patients = doctor.patients
+        console.log(doctor)
+        for(let i = 0; i<patients.length; i++){
+            console.log("patient ",patients[i])
+            for(let j = 0; j<patients[i].routines.length;j++){
+                var routine = await Routine.findOne({_id:patients[i].routines[j]._id}).populate({
+                    path: 'feedbacks',
+                    model: 'Feedback'
+                })
+                console.log("routine ",routine)
+                for(let k = 0; k<routine.feedbacks.length; k++){
+                    console.log("feedback ",routine.feedbacks[k])
+                    if(routine.feedbacks[k].comment){
+                        comments.push({
+                            name : patients[i].name +" "+ patients[i].lastName,
+                            email: patients[i].email,
+                            routine: routine.name,
+                            comment: routine.feedbacks[k].comment,
+                            date: moment(routine.feedbacks[k].date).format('D/M/YYYY') 
+                        })
+                    }
+                }
+            }
+        }
+        return comments
     } catch (e) {
         // return a Error message describing the reason 
         console.log("error services",e)
