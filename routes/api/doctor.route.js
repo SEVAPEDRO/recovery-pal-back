@@ -13,7 +13,7 @@ router.get('/test', function(req, res, next) {
 router.post('/registration', DoctorController.createUser)
 router.post('/getDoctor',DoctorController.getDoctor)
 router.post('/addPatientToDoctor',DoctorController.addPatientToDoctor)
-
+router.post('/getAllCommentsByDoctor',DoctorController.getAllCommentsByDoctor)
 
 
 
