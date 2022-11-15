@@ -54,7 +54,7 @@ exports.addPatientToDoctor= async function (req, res, next) {
     try {
         // Calling the Service function with the new object from the Request Body
         var doctor = await DoctorService.getDoctor({_id: mongoose.Types.ObjectId(req.body.idDoctor)})
-        var patient = await PatientService.getPatient({email: req.body.email})
+        var patient = await PatientService.getUserByEmail({email: req.body.email})
     
         if (!patient || !doctor) {
             return res.status(404).json({message: "No se encontro el doctor o paciente"})
