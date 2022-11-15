@@ -54,14 +54,34 @@ exports.addPatientToDoctor= async function (req, res, next) {
     try {
         // Calling the Service function with the new object from the Request Body
         var doctor = await DoctorService.getDoctor({_id: mongoose.Types.ObjectId(req.body.idDoctor)})
-        var patient = await PatientService.getPatient({_id: mongoose.Types.ObjectId(req.body.idPatient)})
+        var patient = await PatientService.getPatient({email: req.body.email})
     
         if (!patient || !doctor) {
             return res.status(404).json({message: "No se encontro el doctor o paciente"})
         }
-        doctor.patients.push(mongoose.Types.ObjectId(req.body.idPatient))
+        doctor.patients.push(mongoose.Types.ObjectId(patient._id))
         doctor.save()
         return res.status(200).json({message: "Succesfully added Patient to Doctor"})
+    } catch (e) {
+        //Return an Error Response Message with Code and the Error Message.
+        console.log(e)
+        return res.status(400).json({status: 400, message: e.message})
+    }
+}
+
+exports.getAllCommentsByDoctor= async function (req, res, next) {
+    // Req.Body contains the form submit values.
+    console.log("llegue al controller",req.body)
+    try {
+        // Calling the Service function with the new object from the Request Body
+        var doctor = await DoctorService.getDoctor(
+            {_id: mongoose.Types.ObjectId(req.body.idDoctor)}
+        )    
+        if (!doctor) {
+            return res.status(404).json({message: "No se encontro el doctor"})
+        }
+        comments = await DoctorService.getAllCommentsByDoctor(doctor)
+        return res.status(200).json({comments, message: "Succesfully retrieved comments"})
     } catch (e) {
         //Return an Error Response Message with Code and the Error Message.
         console.log(e)
