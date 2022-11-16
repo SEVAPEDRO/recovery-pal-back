@@ -57,11 +57,11 @@ exports.addPatientToDoctor= async function (req, res, next) {
         var patient = await PatientService.getUserByEmail({email: req.body.email})
     
         if (!patient || !doctor) {
-            return res.status(404).json({message: "No se encontro el doctor o paciente"})
+            return res.status(404).json({message: "No se encontro el paciente"})
         }
         doctor.patients.push(mongoose.Types.ObjectId(patient._id))
         doctor.save()
-        return res.status(200).json({message: "Succesfully added Patient to Doctor"})
+        return res.status(200).json({message: "Se agrego el paciente a tu lista"})
     } catch (e) {
         //Return an Error Response Message with Code and the Error Message.
         console.log(e)
