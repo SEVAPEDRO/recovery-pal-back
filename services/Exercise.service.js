@@ -134,16 +134,3 @@ exports.deleteExerciseInDoctor = async function (exercise){
         throw Error('Error while deletting Exercise in Doctor');
     }
 }
-
-
-
-exports.getAllExcercises = async function (filtro){
-    try{
-        var exercises = await Exercise.find(filtro)
-        return exercises;
-    } catch(e){
-        console.log("error due to", e)
-        throw Error("And Error occured while getting all the Exercises");
-        
-    }
-}
