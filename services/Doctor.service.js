@@ -105,7 +105,8 @@ exports.getAllCommentsByDoctor = async function (doctor){
                             email: patients[i].email,
                             routine: routine.name,
                             comment: routine.feedbacks[k].comment,
-                            date: moment(routine.feedbacks[k].date).format('D/M/YYYY') 
+                            date: moment(routine.feedbacks[k].date).format('D/M/YYYY'),
+                            routineId: routine._id
                         })
                     }
                 }
